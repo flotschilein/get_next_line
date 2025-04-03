@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/03 14:56:02 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/03 18:55:51 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 size_t	ft_strlen(const char *s)
 {
 	const char	*counter;
-
 	counter = (char *)s;
 	while (*counter++ != '\0')
 		;
