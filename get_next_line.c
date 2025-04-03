@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/03 15:06:54 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/03 18:33:19 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,31 @@ char *extract_line(char **future_parts)
 	char *temp;
 
 	i = 0;
+	if(!(*future_parts))
+		return (NULL);
 	while ((*future_parts)[i] != '\n' && (*future_parts)[i] != '\0')
 		i++;
 	if((*future_parts)[i] != '\n')
 		line = (ft_substr(*future_parts, 0, i));
 	else
 		line = (ft_substr(*future_parts, 0, i + 1));
+	if(!line)
+	{
+		free(*future_parts);
+		*future_parts = NULL;
+		return (NULL);
+	}
 	if((*future_parts)[i] == '\n')
 		i++;
 	temp = ft_substr(*future_parts, i, ft_strlen(*future_parts) - i);
 	free(*future_parts);
+	if (!temp)
+	{
+		free(line);
+		*future_parts = NULL;
+		return (NULL);
+	}
 	*future_parts = temp;
-
 	return (line);
 }
 
@@ -44,18 +57,33 @@ char *read_file(int fd, char *future_parts)
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	while (read_count > 0 && !ft_strchr(future_parts, '\n'))
+	while (read_count > 0 && (!future_parts || !ft_strchr(future_parts, '\n')))
 	{
 		read_count = read(fd, buffer, BUFFER_SIZE);
 		if (read_count == -1)
+		{
+			free(buffer);
+			free(future_parts);
 			return (NULL);
+		}
 		buffer[read_count] = '\0';
+		if(!future_parts)
+			future_parts = ft_substr("", 0 ,0);
 		if (!future_parts)
-			future_parts = ft_substr("", 0, 0);
+		{
+			free(buffer);
+			return (NULL);
+		}
 		temp = future_parts;
 		future_parts = ft_strjoin(future_parts, buffer);
 		free(temp);
+		if (!future_parts)
+		{
+			free(buffer);
+			return (NULL);
+		}
 	}
+	free(buffer);
 	return (future_parts);
 }
 
@@ -76,6 +104,10 @@ char *get_next_line(int fd)
 		return (NULL);
 	}
 	line = extract_line(&future_parts);
-
+	if(!line && future_parts)
+	{
+		free(future_parts);
+		future_parts = NULL;
+	}
 	return (line);
 }
