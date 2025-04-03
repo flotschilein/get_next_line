@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/02 17:49:19 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/03 14:56:02 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (char)c)
@@ -79,7 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		s1 = "";
 	if (!s2)
 		s2 = "";
-	len = ft_strlen(s1) +ft_strlen(s2);
+	len = ft_strlen(s1) + ft_strlen(s2);
 	i = 0;
 	new = malloc(len + 1);
 	if (!new)
