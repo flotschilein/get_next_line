@@ -6,23 +6,38 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/03 20:44:40 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/04 14:49:48 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-static char	*read_into_stash(int fd, char *stash)
+static char	*read_into_stash(int fd, char *buffer)
 {
 	// use read to read from fd into stash
 }
-static char *get_line_from_stash(char *stash)
+static char *get_line_from_stash(char *buffer)
 {
-	// use strchr to find the first newline and return the line
+
 }
 
-static char	*remove_line_from_stash(char *stash)
+static char	*remove_line_from_stash(char *buffer)
 {
-	// use substr to remove the line from the stash
+	int		i;
+	char	*new_buffer;
+
+	i = 0;
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	if(!buffer[i])
+	{
+		free(buffer);
+		return (NULL);
+	}
+	new_buffer = ft_substr(buffer, i, ft_strlen(buffer) - i);
+	free(buffer);
+	return (new_buffer);
 }
 
 char	*get_next_line(int fd)
@@ -30,17 +45,17 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if(!stash)
+	if(!buffer)
 	{
 		buffer = malloc(1);
 		if (!buffer)
 			return (NULL);
 		stash[0] = '\0';
 	}
-	stash = read_into_stash(fd, stash);
+	buffer = read_into_stash(fd, buffer);
 	if (!stash)
 		return (NULL);
-	line = get_line_from_stash(stash);
-	stash = remove_line_from_stash(stash);
+	line = get_line_from_stash(buffer);
+	buffer = remove_line_from_stash(buffer);
 	return (line);
 }
