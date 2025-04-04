@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/04 14:49:48 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/04 14:53:11 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,20 @@ static char	*read_into_stash(int fd, char *buffer)
 }
 static char *get_line_from_stash(char *buffer)
 {
+	int 	i;
+	char 	*line;
 
+	i = 0;
+	if(!buffer)
+		return (NULL);
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	line = ft_substr(buffer, 0, i);
+	if (!line)
+		return (NULL);
+	return (line);
 }
 
 static char	*remove_line_from_stash(char *buffer)
@@ -30,7 +43,7 @@ static char	*remove_line_from_stash(char *buffer)
 		i++;
 	if (buffer[i] == '\n')
 		i++;
-	if(!buffer[i])
+	if (!buffer[i])
 	{
 		free(buffer);
 		return (NULL);
