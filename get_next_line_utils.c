@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/03 18:55:51 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/05 21:15:54 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 size_t	ft_strlen(const char *s)
 {
-	const char	*counter;
-	counter = (char *)s;
-	while (*counter++ != '\0')
-		;
-	return (counter - s - 1);
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -42,56 +43,52 @@ char	*ft_strchr(const char *s, int c)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
-	size_t	j;
 	char	*sub;
 	size_t	s_len;
 
 	i = 0;
-	j = 0;
 	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
-	if (s_len > start)
-	{
-		while (s[start + i] != '\0' && i < len)
-			i++;
-	}
-	sub = malloc(i + 1);
+	if (s_len <= start)
+		len = 0;
+	else if (s_len - start < len)
+		len = s_len - start;
+	sub = malloc(len + 1);
 	if (!sub)
 		return (NULL);
-	while (j < i && i != 0)
+	while ( i < len && s[start + i] != '\0')
 	{
-		sub[j] = s[start + j];
-		j++;
+		sub[i] = s[start + i];
+		i++;
 	}
-	sub[j] = '\0';
+	sub[i] = '\0';
 	return (sub);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		len;
+	int		len1;
+	int		len2;
 	int		i;
+	int		j;
 	char	*new;
 
-	len = 0;
-	i = 0;
 	if (!s1)
 		s1 = "";
 	if (!s2)
 		s2 = "";
-	len = ft_strlen(s1) + ft_strlen(s2);
-	i = 0;
-	new = malloc(len + 1);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	new = malloc(len1 + len2 + 1);
 	if (!new)
 		return (NULL);
-	i = 0;
-	len = 0;
-	while (s1[i] != '\0')
-		new[len++] = s1[i++];
-	i = 0;
-	while (s2[i] != '\0')
-		new[len++] = s2[i++];
-	new[len] = '\0';
+	i = -1;
+	while (++i < len1)
+		new[i] = s1[i];
+	j = 0;
+	while (j < len2)
+		new[i++] = s2[j++];
+	new[i] = '\0';
 	return (new);
 }
