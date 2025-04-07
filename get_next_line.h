@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:24 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/06 14:34:36 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:11:37 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@
 #  define BUFFER_SIZE 42
 # endif
 
+typedef struct s_fd_list
+{
+	int					fd;
+	char				*buffer;
+	struct s_fd_list	*next;
+}				t_fd_list;
+
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
-char 	*ft_strcpy(char *dest, const char *src);
+
 
 #endif

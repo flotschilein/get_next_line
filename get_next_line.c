@@ -6,7 +6,11 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/06 14:59:27 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/06 15:16:27 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+char	*get_next_line(int fd);
+{
+	static
+}
