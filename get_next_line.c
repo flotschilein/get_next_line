@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 18:55:13 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 19:03:00 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,25 @@ static char	*remove_line_from_stash(char *buffer)
 	char	*new_buffer;
 
 	i = 0;
+	if(!buffer)
+		return (NULL);
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 		i++;
 	if (buffer[i] == '\n')
 		i++;
-	if (!buffer[i])
+	if (buffer[i] == '\0')
 	{
 		free(buffer);
-		buffer = temp;
-		if (!buffer)
-			break ;
+		return (NULL);
 	}
-	free(reading_buffer);
+	new_buffer = ft_substr(buffer, i, ft_strlen(buffer) - i);
+	free(buffer);
 	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_fd_list	*fd_list;
-	t_fd_list			*node;
-	char				*line;
+	s
 
 	if(!buffer)
 	{

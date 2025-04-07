@@ -6,17 +6,11 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/07 18:27:09 by fbraune          ###   ########.fr       */
-=======
-/*   Updated: 2025/04/03 18:55:51 by fbraune          ###   ########.fr       */
->>>>>>> parent of 37dba49... semi working solution
+/*   Updated: 2025/04/07 18:58:50 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-<<<<<<< HEAD
-=======
 
 size_t	ft_strlen(const char *s)
 {
@@ -101,4 +95,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	new[len] = '\0';
 	return (new);
 }
->>>>>>> parent of 37dba49... semi working solution
