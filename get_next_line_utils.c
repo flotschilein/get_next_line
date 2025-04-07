@@ -6,15 +6,38 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 18:58:50 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 21:28:30 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*ft_strdup(const char *s1)
+{
+	int		i;
+	int		j;
+	char	*ptr;
+
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+		i++;
+	ptr = malloc(i + 1);
+	if (!ptr)
+		return (NULL);
+	while (j < i)
+	{
+		ptr[j] = s1[j];
+		j++;
+	}
+	ptr[j] = '\0';
+	return (ptr);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	const char	*counter;
+
 	counter = (char *)s;
 	while (*counter++ != '\0')
 		;
@@ -51,18 +74,17 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
-	if (s_len > start)
-	{
-		while (s[start + i] != '\0' && i < len)
-			i++;
-	}
-	sub = malloc(i + 1);
+	if (start >= s_len)
+		return (ft_strdup(""));
+	if (len > s_len - start)
+        len = s_len - start;
+	sub = malloc(len + 1);
 	if (!sub)
 		return (NULL);
-	while (j < i && i != 0)
+	while (i < len && s[start + i])
 	{
-		sub[j] = s[start + j];
-		j++;
+		sub[j++] = s[start + i];
+		i++;
 	}
 	sub[j] = '\0';
 	return (sub);
