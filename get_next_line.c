@@ -6,13 +6,13 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 16:29:31 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 18:09:58 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_fd_list	*search_node(int fd, t_fd_list **lst)
+static t_fd_list	*search_node(int fd, t_fd_list **lst)
 {
 	t_fd_list	*cur;
 	t_fd_list	*new;
@@ -27,22 +27,62 @@ t_fd_list	*search_node(int fd, t_fd_list **lst)
 	new = malloc(sizeof(t_fd_list));
 	if (!new)
 		return (NULL);
-	new->fd		= fd;
+	new->fd = fd;
 	new->buffer = NULL;
-	new->next	= *lst;
+	new->next = *lst;
 	*lst = new;
 	return (new);
 }
 
-char		*get_next_line(int fd)
+static void remove_node(int fd, t_fd_list **lst)
 {
-	static t_fd_list 	*fd_list;
-	t_fd_list 			*node;
-	int 				read_bytes;
+	t_fd_list	*cur;
+	t_fd_list	*pre
+}
+
+static char	*read_buffer(int fd, char *buffer)
+{
+	char	*temp;
+	char	*reading_buffer;
+	int		i;
+
+	i = 1;
+	reading_buffer = malloc(BUFFER_SIZE + 1);
+	if (!reading_buffer)
+		return (NULL);
+	while (i > 0 && (!buffer || !ft_strchr(buffer, '\n')))
+	{
+		i = read(fd, reading_buffer, BUFFER_SIZE);
+		if (i < 0)
+		{
+			free(reading_buffer);
+			return (NULL);
+		}
+		reading_buffer[i] = '\0';
+		temp = ft_strjoin(buffer, reading_buffer);
+		free(buffer);
+		buffer = temp;
+		if (!buffer)
+			break ;
+	}
+	free(reading_buffer);
+	return (buffer);
+}
+
+char	*get_next_line(int fd)
+{
+	static t_fd_list	*fd_list;
+	t_fd_list			*node;
+	char				*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	node = search_node(fd, &fd_list);
-
+	if (!node)
+		return (NULL);
+	node->buffer = read_buffer(fd, node->buffer);
+	if(!node->buffer)
+	{
+		remove_node(fd, &fd_list)
+	}
 }
-
