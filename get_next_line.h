@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:24 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 15:11:37 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 18:26:59 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ typedef struct s_fd_list
 }				t_fd_list;
 
 char	*get_next_line(int fd);
-
 
 #endif

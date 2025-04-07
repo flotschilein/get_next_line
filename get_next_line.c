@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 18:09:58 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 18:27:20 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,31 @@ static t_fd_list	*search_node(int fd, t_fd_list **lst)
 	return (new);
 }
 
-static void remove_node(int fd, t_fd_list **lst)
+static void	remove_node(int fd, t_fd_list **lst)
 {
 	t_fd_list	*cur;
-	t_fd_list	*pre
+	t_fd_list	*pre;
+
+	cur = *lst;
+	pre = NULL;
+	if (cur->next != NULL && cur->fd == fd)
+	{
+		*lst = cur->next;
+		free (cur->buffer);
+		free (cur);
+		return ;
+	}
+	while (cur->next != NULL && cur.fd != fd)
+	{
+		pre = cur;
+		cur = cur->next;
+	}
+	if (cur->next != NULL)
+	{
+		pre->next = cur->next;
+		free(cur->buffer);
+		free(cur);
+	}
 }
 
 static char	*read_buffer(int fd, char *buffer)
@@ -81,8 +102,13 @@ char	*get_next_line(int fd)
 	if (!node)
 		return (NULL);
 	node->buffer = read_buffer(fd, node->buffer);
-	if(!node->buffer)
+	if (!node->buffer)
 	{
 		remove_node(fd, &fd_list)
+		return (NULL);
 	}
+	line = line_extractor(&node->buffer);
+	if (!line || !node->buffer)
+		remove_node(fd, &fd_list);
+	return (line);
 }
