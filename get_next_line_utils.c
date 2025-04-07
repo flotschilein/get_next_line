@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 21:28:30 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/07 21:37:49 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start >= s_len)
 		return (ft_strdup(""));
 	if (len > s_len - start)
-        len = s_len - start;
+		len = s_len - start;
 	sub = malloc(len + 1);
 	if (!sub)
 		return (NULL);
