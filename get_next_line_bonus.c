@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/09 17:57:15 by fbraune          ###   ########.fr       */
+/*   Created: 2025/04/08 14:14:12 by fbraune           #+#    #+#             */
+/*   Updated: 2025/04/09 17:57:04 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int	read_part(int fd, char *reading_buffer, char **buffer)
 {
@@ -94,18 +94,18 @@ static char	*remove_line_from_stash(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*fd_buffers[10240];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (free(buffer), buffer = NULL, NULL);
-	buffer = read_into_stash(fd, buffer);
-	if (!buffer)
+	if (fd < 0 || BUFFER_SIZE < 1 || fd > 10240)
+		return (free(fd_buffers[fd]), fd_buffers[fd] = NULL, NULL);
+	fd_buffers[fd] = read_into_stash(fd, fd_buffers[fd]);
+	if (!fd_buffers[fd])
 		return (NULL);
-	line = get_line_from_stash(buffer);
+	line = get_line_from_stash(fd_buffers[fd]);
 	if (!line)
-		return (free(buffer), buffer = NULL, NULL);
-	buffer = remove_line_from_stash(buffer);
+		return (free(fd_buffers[fd]), fd_buffers[fd] = NULL, NULL);
+	fd_buffers[fd] = remove_line_from_stash(fd_buffers[fd]);
 	return (line);
 }
 
