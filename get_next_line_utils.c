@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:22:12 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/07 21:37:49 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/13 22:01:59 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,32 +62,24 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
+	size_t	len_src;
 	size_t	i;
-	size_t	j;
-	char	*sub;
-	size_t	s_len;
 
+	len_src = 0;
 	i = 0;
-	j = 0;
-	if (!s)
-		return (NULL);
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-		return (ft_strdup(""));
-	if (len > s_len - start)
-		len = s_len - start;
-	sub = malloc(len + 1);
-	if (!sub)
-		return (NULL);
-	while (i < len && s[start + i])
+	while (src[len_src] != '\0')
+		len_src++;
+	if (dstsize == 0)
+		return (len_src);
+	while (i < dstsize - 1 && src[i] != '\0')
 	{
-		sub[j++] = s[start + i];
+		dst[i] = src[i];
 		i++;
 	}
-	sub[j] = '\0';
-	return (sub);
+	dst[i] = '\0';
+	return (len_src);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
