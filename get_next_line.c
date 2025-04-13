@@ -6,15 +6,38 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/13 22:04:23 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/13 22:17:59 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+static char *get_line_stash(char *buffer)
+
+static void clean_buffer(char *buffer)
+
+static char *read_to_stash(int fd, char *buffer, char *temp)
 
 char	*get_next_line(int fd)
 {
+	static char buffer[BUFFER_SIZE + 1];
+	char		*line;
+	char		*temp;
 
+	if(fd < 0 || BUFFER_SIZE < 1)
+		return (buffer[0] = '\0' , NULL);
+	if (ft_strchr(buffer, '\n'))
+		return (line = get_line_stash(buffer), clean_buffer(buffer), line);
+	temp = ft_strdup(buffer);
+	if (!temp)
+		return (NULL);
+	buffer[0] = '\0';
+	temp = read_to_stash(fd, buffer, temp);
+	if (!temp)
+		return (NULL);
+	line = get_line_stash(temp);
+	if (line && temp[0])
+		ft_strlcpy(buffer, temp + ft_strlen(line), BUFFER_SIZE + 1);
+	free (temp);
 	return (line);
 }
 
