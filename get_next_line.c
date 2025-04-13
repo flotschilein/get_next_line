@@ -6,13 +6,36 @@
 /*   By: fbraune <fbraune@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/13 22:17:59 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/13 22:44:53 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 static char *get_line_stash(char *buffer)
+{
+	char	*line;
+	size_t	i;
+	size_t	j;
 
+	i = 0;
+	j = 0;
+	if (!buffer || buffer[0] == '\0')
+		return (NULL);
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	line = malloc(i + 1);
+	if (!line)
+		return (NULL);
+	while (j < i)
+	{
+		line[j] = buffer[j];
+		j++;
+	}
+	line[j] = '\0';
+	return (line);
+}
 static void clean_buffer(char *buffer)
 
 static char *read_to_stash(int fd, char *buffer, char *temp)
