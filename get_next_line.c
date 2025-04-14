@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/14 15:31:33 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/14 17:30:44 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char *read_to_stash(int fd, char *buffer, char *temp)
 {
 	char	buffer_read[BUFFER_SIZE + 1];
 	int		read_bytes;
+	char	*temp_old;
 
 	read_bytes = 1;
 	while (read_bytes > 0 && !ft_strchr(temp, '\n'))
@@ -67,7 +68,9 @@ char *read_to_stash(int fd, char *buffer, char *temp)
 		if (read_bytes == 0)
 			break ;
 		buffer_read[read_bytes] = '\0';
-		temp = ft_strjoin(temp, buffer_read);
+		temp_old = temp;
+		temp = ft_strjoin(temp_old, buffer_read);
+		free (temp_old);
 		if (!temp)
 			return (NULL);
 	}
@@ -98,8 +101,8 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
- #include <stdio.h>
-#include <fcntl.h>
+//  #include <stdio.h>
+// #include <fcntl.h>
 // int main(int argc, char **argv)
 // {
 // 	int fd;
@@ -137,19 +140,19 @@ char	*get_next_line(int fd)
 // 	}
 // 	return (0);
 // }
-int main(void)
-{
-	int fd;
-	char *next_line;
-	int i = 0;
+// int main(void)
+// {
+// 	int fd;
+// 	char *next_line;
+// 	int i = 0;
 
-	fd = open("test.txt", O_RDONLY);
-	while (i ++ < 3)
-	{
-		next_line = get_next_line(fd);
-		printf("Line: %s", next_line);
-		free(next_line);
-	}
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", O_RDONLY);
+// 	while (i ++ < 3)
+// 	{
+// 		next_line = get_next_line(fd);
+// 		printf("Line: %s", next_line);
+// 		free(next_line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
