@@ -6,13 +6,13 @@
 /*   By: fbraune <fbraune@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/14 17:40:54 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/14 17:45:19 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*get_line_stash(char *buffer)
+static char	*get_line_buffer(char *buffer)
 {
 	char	*line;
 	size_t	i;
@@ -54,7 +54,7 @@ static void	buffer_move(char *buffer)
 	buffer[j] = '\0';
 }
 
-char	*read_to_stash(int fd, char *buffer, char *temp)
+char	*read_to_buffer(int fd, char *buffer, char *temp)
 {
 	char	buffer_read[BUFFER_SIZE + 1];
 	int		read_bytes;
@@ -87,15 +87,15 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (buffer[0] = '\0', NULL);
 	if (ft_strchr(buffer, '\n'))
-		return (line = get_line_stash(buffer), buffer_move(buffer), line);
+		return (line = get_line_buffer(buffer), buffer_move(buffer), line);
 	temp = ft_strdup(buffer);
 	if (!temp)
 		return (NULL);
 	buffer[0] = '\0';
-	temp = read_to_stash(fd, buffer, temp);
+	temp = read_to_buffer(fd, buffer, temp);
 	if (!temp)
 		return (NULL);
-	line = get_line_stash(temp);
+	line = get_line_buffer(temp);
 	if (line && temp[0])
 		ft_strlcpy(buffer, temp + ft_strlen(line), BUFFER_SIZE + 1);
 	free(temp);
