@@ -6,13 +6,13 @@
 /*   By: fbraune <fbraune@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:21:59 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/14 17:30:44 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/14 17:40:54 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *get_line_stash(char *buffer)
+static char	*get_line_stash(char *buffer)
 {
 	char	*line;
 	size_t	i;
@@ -37,7 +37,8 @@ static char *get_line_stash(char *buffer)
 	line[j] = '\0';
 	return (line);
 }
-static void buffer_move(char *buffer)
+
+static void	buffer_move(char *buffer)
 {
 	size_t	i;
 	size_t	j;
@@ -49,11 +50,11 @@ static void buffer_move(char *buffer)
 	if (buffer[i] == '\n')
 		i++;
 	while (buffer[i] != '\0')
-	    buffer[j++] = buffer[i++];
+		buffer[j++] = buffer[i++];
 	buffer[j] = '\0';
 }
 
-char *read_to_stash(int fd, char *buffer, char *temp)
+char	*read_to_stash(int fd, char *buffer, char *temp)
 {
 	char	buffer_read[BUFFER_SIZE + 1];
 	int		read_bytes;
@@ -70,7 +71,7 @@ char *read_to_stash(int fd, char *buffer, char *temp)
 		buffer_read[read_bytes] = '\0';
 		temp_old = temp;
 		temp = ft_strjoin(temp_old, buffer_read);
-		free (temp_old);
+		free(temp_old);
 		if (!temp)
 			return (NULL);
 	}
@@ -79,12 +80,12 @@ char *read_to_stash(int fd, char *buffer, char *temp)
 
 char	*get_next_line(int fd)
 {
-	static char buffer[BUFFER_SIZE + 1];
+	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
 	char		*temp;
 
-	if(fd < 0 || BUFFER_SIZE < 1)
-		return (buffer[0] = '\0' , NULL);
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (buffer[0] = '\0', NULL);
 	if (ft_strchr(buffer, '\n'))
 		return (line = get_line_stash(buffer), buffer_move(buffer), line);
 	temp = ft_strdup(buffer);
@@ -97,49 +98,12 @@ char	*get_next_line(int fd)
 	line = get_line_stash(temp);
 	if (line && temp[0])
 		ft_strlcpy(buffer, temp + ft_strlen(line), BUFFER_SIZE + 1);
-	free (temp);
+	free(temp);
 	return (line);
 }
 
-//  #include <stdio.h>
+// #include <stdio.h>
 // #include <fcntl.h>
-// int main(int argc, char **argv)
-// {
-// 	int fd;
-// 	char *line;
-// 	int i;
-
-// 	i = 0;
-// 	if(argc != 2)
-// 	{
-// 		write(1, "Error", 5);
-// 		return (1);
-// 	}
-// 	fd = open(argv[1], O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		write(1, "Error", 5);
-// 		return (1);
-// 	}
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		i++;
-// 		printf("in line %i there is :%s", i, line);
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	line = get_next_line(-1);
-// 	if(line == NULL)
-// 	{
-// 		printf("\ninvalid fd handled correct\n");
-// 	}
-// 	else
-// 	{
-// 		printf("invalid fd handled not correct\n");
-// 		free(line);
-// 	}
-// 	return (0);
-// }
 // int main(void)
 // {
 // 	int fd;
