@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:58:32 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/15 20:40:31 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/15 20:41:26 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,25 @@ char	*read_to_buffer(int fd, char *buffer, char *temp)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[65536][BUFFER_SIZE + 1];
+	static char	buffers[65536][BUFFER_SIZE + 1];
 	char		*line;
 	char		*temp;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || fd > 65535)
 		return (NULL);
-	if (ft_strchr(buffer[fd], '\n'))
-		return (line = get_line_buffer(buffer[fd]), buffer_move(buffer[fd]),
+	if (ft_strchr(buffers[fd], '\n'))
+		return (line = get_line_buffer(buffers[fd]), buffer_move(buffers[fd]),
 			line);
-	temp = ft_strdup(buffer[fd]);
+	temp = ft_strdup(buffers[fd]);
 	if (!temp)
 		return (NULL);
-	buffer[fd][0] = '\0';
-	temp = read_to_buffer(fd, buffer[fd], temp);
+	buffers[fd][0] = '\0';
+	temp = read_to_buffer(fd, buffers[fd], temp);
 	if (!temp)
 		return (NULL);
 	line = get_line_buffer(temp);
 	if (line && temp[0])
-		ft_strlcpy(buffer[fd], temp + ft_strlen(line), BUFFER_SIZE + 1);
+		ft_strlcpy(buffers[fd], temp + ft_strlen(line), BUFFER_SIZE + 1);
 	free(temp);
 	return (line);
 }
