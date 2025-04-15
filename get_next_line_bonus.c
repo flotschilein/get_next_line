@@ -6,7 +6,7 @@
 /*   By: fbraune <fbraune@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:58:32 by fbraune           #+#    #+#             */
-/*   Updated: 2025/04/14 20:18:09 by fbraune          ###   ########.fr       */
+/*   Updated: 2025/04/15 20:40:31 by fbraune          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ char	*read_to_buffer(int fd, char *buffer, char *temp)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[10240][BUFFER_SIZE + 1];
+	static char	buffer[65536][BUFFER_SIZE + 1];
 	char		*line;
 	char		*temp;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1 || fd > 65535)
 		return (NULL);
 	if (ft_strchr(buffer[fd], '\n'))
 		return (line = get_line_buffer(buffer[fd]), buffer_move(buffer[fd]),
